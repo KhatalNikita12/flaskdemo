@@ -3,14 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hello Nikita </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <title>hello Flask </title>
+    <form method="post">
+      <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="First name" name="fname">
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Last name" name="lname">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
     <P>Hello Nikita we are rendering the index.html using flask.</P>
-    {% for todo in all_todo %}
-    <h1>{{todo.sno}}.{{todo.name}}</h1>
+    <!-- {% for todo in all_todo %}
+    <h1>{{loop.index}}.{{todo.fname}} {{todo.lname}}</h1>
        
-    {% endfor %}
+    {% endfor %} -->
 </head>
 <body>
+  <table class="table border">
+    <thead>
+      <tr>
+        <th scope="col">sno</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for  todo in all_todo %}
+      <tr>
+        <th scope="row">{{loop.index}}</th>
+        <td>{{todo.fname}}</td>
+        <td>{{todo.lname}}</td>
+        <td>
+          <button type="button" class="btn btn-primary">Edit</button>
+          <button type="button" class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+        
+      {% endfor %}
     
+   
+    </tbody>
+  </table>
 </body>
 </html>
