@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request
+from flask import Flask, render_template,request,redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -24,7 +24,7 @@ def hello_world():
         fname=request.form['fname']
         lname=request.form['lname']
         todo=Todo(fname=fname,lname=lname)
-        
+        # todo=Todo("Nikita","Khatal")
         db.session.add(todo)
         db.session.commit()
     all_todo=Todo.query.all()
@@ -34,6 +34,26 @@ def hello_world():
 def show():
     all_todo=Todo.query.all()
     return render_template('index.html',all_todo=all_todo)
+
+@app.route('/delete/<int:sno>')
+def delete(sno):
+    todo = Todo.query.filter_by(sno=sno).first()
+    db.session.delete(todo)
+    db.session.commit()
+    return  redirect("/")
+@app.route('/update/<int:sno>',methods=['GET','POST'])
+def update(sno):
+    if request.method=='POST':
+        fname=request.form['fname']
+        lname=request.form['lname']
+        todo = Todo.query.filter_by(sno=sno).first()
+        todo.fname=fname
+        todo.lname=lname
+        db.session.add(todo)
+        db.session.commit()
+        return redirect("/")
+    todo = Todo.query.filter_by(sno=sno).first()
+    return render_template('update.html',todo=todo)
 
 def create_database():
     with app.app_context():
